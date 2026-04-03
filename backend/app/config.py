@@ -37,6 +37,8 @@ class Settings:
         "DATABASE_URL",
         "sqlite:///./statix.db",
     )
+    # URL pública del servicio frontend (Railway). Para mostrar en / un enlace “Abrir la app”.
+    FRONTEND_PUBLIC_URL: str = os.getenv("FRONTEND_PUBLIC_URL", "").strip()
 
 
 settings = Settings()

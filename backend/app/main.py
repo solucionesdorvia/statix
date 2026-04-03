@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse, Response
+from fastapi.responses import HTMLResponse, Response
 
 from app.config import cors_allow_origins_and_credentials, settings
 from app.database import Base, engine
 from app.models import ClinicalEvaluation, Paciente  # noqa: F401
 from app.routers import pacientes
+from app.static_home import root_page_html
 
 Base.metadata.create_all(bind=engine)
 
@@ -24,10 +25,10 @@ app.add_middleware(
 app.include_router(pacientes.router)
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def root():
-    """Abrir la URL del API en el navegador lleva a la documentación interactiva."""
-    return RedirectResponse(url="/docs", status_code=307)
+    """Página HTML: explica que esta URL es el API y cómo enlazar el frontend."""
+    return HTMLResponse(content=root_page_html())
 
 
 @app.get("/favicon.ico", include_in_schema=False)

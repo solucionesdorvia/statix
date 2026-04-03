@@ -48,20 +48,37 @@ statix/
 
 ## Despliegue en Railway (app + API)
 
-Hay **dos servicios** en el mismo repositorio:
+Son **dos servicios distintos** en el mismo repositorio (mismo GitHub):
 
-1. **API (backend)** — raíz del repo, `Dockerfile` en la raíz.
-2. **Frontend** — otro servicio con **Settings → Root Directory** = **`/frontend`**.
+| Qué querés ver en el navegador | Qué servicio abrir |
+|-------------------------------|-------------------|
+| **La aplicación** (formularios, Statix UI) | URL del servicio **frontend** |
+| **Solo API** (Swagger, JSON) | URL del servicio **backend** |
 
-**Imprescindible en el servicio del frontend** (si no, el bundle llama a `localhost` y la app no puede hablar con el API):
+### 1. Servicio API (backend)
+
+- **Root Directory:** vacío (raíz del repo) — usa el `Dockerfile` de la raíz.
+- Opcional: **`FRONTEND_PUBLIC_URL`** = URL `https://…` del servicio frontend. Así en `/` del API ves un botón “Abrir la aplicación web”.
+
+### 2. Servicio frontend (React)
+
+- **Settings → Root Directory:** **`/frontend`**
+- Variable obligatoria:
 
 | Variable         | Valor |
 |------------------|--------|
-| `VITE_API_URL`   | URL pública del API, ej. `https://tu-api.up.railway.app` (sin `/` al final) |
+| `VITE_API_URL`   | URL **https** del servicio API, ej. `https://tu-api.up.railway.app` (sin `/` al final) |
 
-Después de crear o cambiar `VITE_API_URL`, hacé **Redeploy** del frontend (Vite “hornea” esa URL en el build).
+Tras crear o cambiar `VITE_API_URL`, hacé **Redeploy** del frontend (Vite incorpora esa URL al **build**).
 
-El API permite CORS desde cualquier origen por defecto. Opcional: `ALLOWED_ORIGINS` (coma-separada) si querés restringir orígenes.
+### 3. Resumen
+
+1. Desplegá el **API** y copiá su dominio público.  
+2. Creá el servicio **frontend** (`/frontend`), poné `VITE_API_URL` = ese dominio, redeploy.  
+3. Abrí en el navegador el dominio del **frontend** para usar la app.  
+4. (Opcional) En el API, `FRONTEND_PUBLIC_URL` = dominio del frontend.
+
+El API permite CORS desde cualquier origen por defecto. Opcional: `ALLOWED_ORIGINS` (coma-separada).
 
 En producción conviene `DATABASE_URL` con PostgreSQL en Railway (SQLite en el contenedor se pierde al reiniciar).
 
