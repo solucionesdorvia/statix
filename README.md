@@ -45,3 +45,20 @@ statix/
   README.md
   .gitignore
 ```
+
+## Repositorio Git
+
+El proyecto ya está versionado con Git (rama `main`). Para subirlo a GitHub:
+
+1. Crear un repositorio vacío en [github.com/new](https://github.com/new) (sin README ni `.gitignore` si ya los tenés localmente).
+2. En la carpeta del proyecto:
+
+```powershell
+cd c:\Users\54113\Desktop\proyectos\statix
+git remote add origin https://github.com/TU_USUARIO/statix.git
+git push -u origin main
+```
+
+(Sustituí `TU_USUARIO/statix` por tu usuario y nombre de repo. Si usás SSH: `git@github.com:TU_USUARIO/statix.git`.)
+
+**Nota:** Configurá tu identidad global si aún no lo hiciste: `git config --global user.name "Tu nombre"` y `git config --global user.email "tu@email.com"`.
