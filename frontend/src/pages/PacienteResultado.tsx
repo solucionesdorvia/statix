@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { isAxiosError } from "axios";
+
 import { api } from "../api/client";
 import type { AnalysisResultState } from "../types/result";
 
@@ -94,8 +96,15 @@ export function PacienteResultado() {
           created_at: data.created_at,
         });
       })
-      .catch(() => {
-        if (!cancelled) setFetchError("No se encontró esta evaluación o el servidor no respondió.");
+      .catch((e) => {
+        if (cancelled) return;
+        if (isAxiosError(e) && (e.code === "ERR_NETWORK" || e.message === "Network Error" || !e.response)) {
+          setFetchError(
+            "No hay respuesta del API. Compruebe la URL del backend (VITE_API_URL en el build del frontend).",
+          );
+          return;
+        }
+        setFetchError("No se encontró esta evaluación o el servidor no respondió.");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

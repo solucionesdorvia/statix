@@ -5,23 +5,30 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def get_cors_origins() -> list[str]:
-    """Orígenes permitidos para CORS: dev local + ALLOWED_ORIGINS (coma-separada, p. ej. URL del frontend en Railway)."""
+def cors_allow_origins_and_credentials() -> tuple[list[str], bool]:
+    """
+    CORS para el navegador (frontend en otro dominio que el API).
+
+    Sin ALLOWED_ORIGINS: permite cualquier origen (`*`) y sin credenciales;
+    así la app en Railway funciona sin variables extra en el API.
+
+    Con ALLOWED_ORIGINS (coma-separada): solo esos orígenes + localhost para dev.
+    """
     defaults = [
         "http://127.0.0.1:5173",
         "http://localhost:5173",
     ]
     raw = os.getenv("ALLOWED_ORIGINS", "").strip()
     if not raw:
-        return defaults
+        return (["*"], False)
     extra = [o.strip() for o in raw.split(",") if o.strip()]
-    seen = set(defaults)
-    out = list(defaults)
-    for o in extra:
+    seen: set[str] = set()
+    out: list[str] = []
+    for o in defaults + extra:
         if o not in seen:
             seen.add(o)
             out.append(o)
-    return out
+    return (out, False)
 
 
 class Settings:

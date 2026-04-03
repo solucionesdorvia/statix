@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { apiUrlMisconfiguredForProd, apiBaseUrl } from "../api/client";
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   [
@@ -28,6 +29,18 @@ export function Layout() {
         </nav>
       </aside>
       <main className="flex-1 overflow-auto p-8">
+        {apiUrlMisconfiguredForProd && (
+          <div
+            className="mb-6 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950"
+            role="alert"
+          >
+            <strong className="font-semibold">API no configurada en el build.</strong> El frontend está usando{" "}
+            <code className="rounded bg-amber-100 px-1">{apiBaseUrl}</code>. En Railway, en el servicio del{" "}
+            <strong>frontend</strong>, agregá la variable{" "}
+            <code className="rounded bg-amber-100 px-1">VITE_API_URL</code> con la URL pública del API (https://…) y
+            volvé a <strong>desplegar</strong> ese servicio.
+          </div>
+        )}
         <Outlet />
       </main>
     </div>

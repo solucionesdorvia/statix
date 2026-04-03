@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isAxiosError } from "axios";
+
 import { api } from "../api/client";
 import type { AnalysisResultState } from "../types/result";
 
@@ -186,10 +188,21 @@ export function PacienteNuevo() {
         created_at: data.created_at,
       };
       navigate(`/paciente/${data.id}`, { state });
-    } catch {
+    } catch (e) {
+      let server =
+        "No se pudo contactar con la API. Compruebe que el backend esté en marcha.";
+      if (isAxiosError(e)) {
+        const detail = (e.response?.data as { detail?: string } | undefined)?.detail;
+        if (typeof detail === "string") {
+          server = detail;
+        } else if (e.code === "ERR_NETWORK" || e.message === "Network Error" || !e.response) {
+          server =
+            "Sin respuesta del API (red o URL incorrecta). Si usás Railway: variable VITE_API_URL en el servicio del frontend = URL del API, luego redeploy del frontend.";
+        }
+      }
       setErrors((prev) => ({
         ...prev,
-        server: "No se pudo contactar con la API. Compruebe que el backend esté en marcha.",
+        server,
       }));
     } finally {
       setLoading(false);

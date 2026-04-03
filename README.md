@@ -50,17 +50,20 @@ statix/
 
 Hay **dos servicios** en el mismo repositorio:
 
-1. **API (backend)** — raíz del repo, ya usa el `Dockerfile` de la raíz.
-2. **Frontend** — crear otro servicio, en **Settings → Root Directory** poner **`/frontend`**.
+1. **API (backend)** — raíz del repo, `Dockerfile` en la raíz.
+2. **Frontend** — otro servicio con **Settings → Root Directory** = **`/frontend`**.
 
-Variables:
+**Imprescindible en el servicio del frontend** (si no, el bundle llama a `localhost` y la app no puede hablar con el API):
 
-| Servicio   | Variable            | Valor |
-|------------|---------------------|--------|
-| Frontend   | `VITE_API_URL`      | URL pública del API, ej. `https://tu-api.up.railway.app` (sin barra final) |
-| API        | `ALLOWED_ORIGINS`   | URL pública del frontend, ej. `https://tu-app.up.railway.app` |
+| Variable         | Valor |
+|------------------|--------|
+| `VITE_API_URL`   | URL pública del API, ej. `https://tu-api.up.railway.app` (sin `/` al final) |
 
-Para producción, configurá también `DATABASE_URL` en el API (PostgreSQL en Railway).
+Después de crear o cambiar `VITE_API_URL`, hacé **Redeploy** del frontend (Vite “hornea” esa URL en el build).
+
+El API permite CORS desde cualquier origen por defecto. Opcional: `ALLOWED_ORIGINS` (coma-separada) si querés restringir orígenes.
+
+En producción conviene `DATABASE_URL` con PostgreSQL en Railway (SQLite en el contenedor se pierde al reiniciar).
 
 ## Repositorio Git
 
