@@ -46,6 +46,22 @@ statix/
   .gitignore
 ```
 
+## Despliegue en Railway (app + API)
+
+Hay **dos servicios** en el mismo repositorio:
+
+1. **API (backend)** — raíz del repo, ya usa el `Dockerfile` de la raíz.
+2. **Frontend** — crear otro servicio, en **Settings → Root Directory** poner **`/frontend`**.
+
+Variables:
+
+| Servicio   | Variable            | Valor |
+|------------|---------------------|--------|
+| Frontend   | `VITE_API_URL`      | URL pública del API, ej. `https://tu-api.up.railway.app` (sin barra final) |
+| API        | `ALLOWED_ORIGINS`   | URL pública del frontend, ej. `https://tu-app.up.railway.app` |
+
+Para producción, configurá también `DATABASE_URL` en el API (PostgreSQL en Railway).
+
 ## Repositorio Git
 
 El proyecto ya está versionado con Git (rama `main`). Para subirlo a GitHub:
