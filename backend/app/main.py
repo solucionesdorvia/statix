@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
 
 from app.config import settings
 from app.database import Base, engine
@@ -22,6 +23,21 @@ app.add_middleware(
 )
 
 app.include_router(pacientes.router)
+
+
+@app.get("/")
+def root():
+    return {
+        "name": settings.APP_NAME,
+        "message": "API Statix — usá /docs para la documentación interactiva.",
+        "docs": "/docs",
+        "health": "/health",
+    }
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    return Response(status_code=204)
 
 
 @app.get("/health")
