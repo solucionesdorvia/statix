@@ -34,7 +34,7 @@ npm run dev
 
 - App: http://127.0.0.1:5173
 
-El cliente asume la API en `http://127.0.0.1:8000` (ver `frontend/.env.example`).
+En local podés usar `VITE_API_URL=http://127.0.0.1:8000` en `frontend/.env` **o** dejarla sin definir y usar el proxy de Vite hacia el puerto 8000 (ver `vite.config.ts`).
 
 ## Estructura
 
@@ -42,45 +42,23 @@ El cliente asume la API en `http://127.0.0.1:8000` (ver `frontend/.env.example`)
 statix/
   frontend/     # Vite + React + TS + Tailwind
   backend/      # FastAPI + SQLAlchemy
+  Dockerfile    # Build único: Vite + FastAPI (producción)
   README.md
   .gitignore
 ```
 
-## Despliegue en Railway (app + API)
+## Despliegue en Railway (un solo servicio)
 
-Son **dos servicios distintos** en el mismo repositorio (mismo GitHub):
+**Un único servicio** conectado al repo, **Root Directory vacío** (raíz del repositorio). El `Dockerfile` de la raíz:
 
-| Qué querés ver en el navegador | Qué servicio abrir |
-|-------------------------------|-------------------|
-| **La aplicación** (formularios, Statix UI) | URL del servicio **frontend** |
-| **Solo API** (Swagger, JSON) | URL del servicio **backend** |
+1. Compila el frontend (Vite) con el API en el **mismo origen** (sin `VITE_API_URL`).
+2. Copia el build a `static/` y arranca FastAPI: en `/` tenés la **app**, en `/docs` el Swagger, `/pacientes` el API.
 
-### 1. Servicio API (backend)
+No hace falta variable `VITE_API_URL` ni un segundo servicio. Si antes creaste un servicio solo para `/frontend`, podés borrarlo o dejar de usarlo.
 
-- **Root Directory:** vacío (raíz del repo) — usa el `Dockerfile` de la raíz.
-- Opcional: **`FRONTEND_PUBLIC_URL`** = URL `https://…` del servicio frontend. Así en `/` del API ves un botón “Abrir la aplicación web”.
+Opcional: `DATABASE_URL` con PostgreSQL en Railway (SQLite en el contenedor se pierde al reiniciar).
 
-### 2. Servicio frontend (React)
-
-- **Settings → Root Directory:** **`/frontend`**
-- Variable obligatoria:
-
-| Variable         | Valor |
-|------------------|--------|
-| `VITE_API_URL`   | URL **https** del servicio API, ej. `https://tu-api.up.railway.app` (sin `/` al final) |
-
-Tras crear o cambiar `VITE_API_URL`, hacé **Redeploy** del frontend (Vite incorpora esa URL al **build**).
-
-### 3. Resumen
-
-1. Desplegá el **API** y copiá su dominio público.  
-2. Creá el servicio **frontend** (`/frontend`), poné `VITE_API_URL` = ese dominio, redeploy.  
-3. Abrí en el navegador el dominio del **frontend** para usar la app.  
-4. (Opcional) En el API, `FRONTEND_PUBLIC_URL` = dominio del frontend.
-
-El API permite CORS desde cualquier origen por defecto. Opcional: `ALLOWED_ORIGINS` (coma-separada).
-
-En producción conviene `DATABASE_URL` con PostgreSQL en Railway (SQLite en el contenedor se pierde al reiniciar).
+Opcional: `ALLOWED_ORIGINS` si querés restringir CORS (por defecto está abierto).
 
 ## Repositorio Git
 

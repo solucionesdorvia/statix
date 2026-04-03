@@ -29,6 +29,8 @@ build/
 
 # Build / logs
 frontend/dist/
+# Copia local del build Vite para probar SPA con uvicorn (Docker genera esto en la imagen)
+backend/static/
 *.log
 npm-debug.log*
 
