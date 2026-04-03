@@ -126,7 +126,7 @@ export function PacienteResultado() {
 
   return (
     <div className="mx-auto w-full max-w-3xl print:max-w-none">
-      <div className="mb-6 flex flex-col gap-1 print:mb-4">
+      <div className="mb-5 flex flex-col gap-1 print:mb-4 lg:mb-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Statix</p>
         <p className="font-mono text-xs text-slate-500">
           ID: <span className="text-slate-800">{id}</span>
@@ -143,7 +143,7 @@ export function PacienteResultado() {
       </div>
 
       {loading && !hasEval && (
-        <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-8 text-slate-600">
+        <div className="flex min-h-[100px] items-center gap-4 rounded-xl border border-slate-200 bg-white p-6 text-base text-slate-600 lg:p-8 lg:text-sm">
           <svg className="h-8 w-8 animate-spin text-sky-800" viewBox="0 0 24 24" fill="none" aria-hidden>
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path
@@ -181,7 +181,7 @@ export function PacienteResultado() {
         <>
           {rec === "thrombectomy" && (
             <section
-              className="rounded-2xl border-2 border-emerald-600 bg-emerald-600 p-6 text-white shadow-lg sm:p-8 print:border-emerald-700 print:bg-emerald-700"
+              className="rounded-2xl border-2 border-emerald-600 bg-emerald-600 p-5 text-white shadow-lg sm:p-8 print:border-emerald-700 print:bg-emerald-700"
               aria-labelledby="titulo-rec"
             >
               <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
@@ -202,7 +202,7 @@ export function PacienteResultado() {
 
           {rec === "borderline" && (
             <section
-              className="rounded-2xl border-2 border-amber-400 bg-amber-50 p-6 text-amber-950 shadow-lg sm:p-8 print:bg-amber-50"
+              className="rounded-2xl border-2 border-amber-400 bg-amber-50 p-5 text-amber-950 shadow-lg sm:p-8 print:bg-amber-50"
               aria-labelledby="titulo-rec-b"
             >
               <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
@@ -223,7 +223,7 @@ export function PacienteResultado() {
 
           {rec === "no_thrombectomy" && (
             <section
-              className="rounded-2xl border-2 border-red-600 bg-red-600 p-6 text-white shadow-lg sm:p-8 print:bg-red-700"
+              className="rounded-2xl border-2 border-red-600 bg-red-600 p-5 text-white shadow-lg sm:p-8 print:bg-red-700"
               aria-labelledby="titulo-rec-n"
             >
               <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
@@ -244,7 +244,7 @@ export function PacienteResultado() {
 
           {rec === "inconclusive" && (
             <section
-              className="rounded-2xl border-2 border-slate-500 bg-slate-100 p-6 text-slate-900 shadow-lg sm:p-8 print:bg-slate-50"
+              className="rounded-2xl border-2 border-slate-500 bg-slate-100 p-5 text-slate-900 shadow-lg sm:p-8 print:bg-slate-50"
               aria-labelledby="titulo-rec-i"
             >
               <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
@@ -279,13 +279,13 @@ export function PacienteResultado() {
             </span>
           </div>
 
-          <section className="mt-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 print:shadow-none">
+          <section className="mt-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 lg:mt-8 print:shadow-none">
             <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">Fundamentos del análisis</h2>
             <ul className="mt-4 space-y-3">
               {state!.reasons.map((r, i) => {
                 const warn = reasonUsesWarning(r);
                 return (
-                  <li key={i} className="flex gap-3 text-sm leading-relaxed text-slate-800 sm:text-base">
+                  <li key={i} className="flex gap-3 text-base leading-relaxed text-slate-800">
                     <span className="mt-0.5 shrink-0" aria-hidden>
                       {warn ? (
                         <IconWarning className="h-5 w-5 text-amber-600" />
@@ -300,7 +300,7 @@ export function PacienteResultado() {
             </ul>
           </section>
 
-          <section className="mt-6 rounded-xl border border-slate-200 bg-slate-50/80 p-5 sm:p-6 print:bg-white">
+          <section className="mt-5 rounded-xl border border-slate-200 bg-slate-50/80 p-4 sm:p-6 lg:mt-6 print:bg-white">
             <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">Datos ingresados</h2>
             <dl className="mt-4 grid gap-3 sm:grid-cols-2">
               <div className="rounded-lg border border-slate-200 bg-white px-4 py-3">
@@ -330,17 +330,17 @@ export function PacienteResultado() {
             </dl>
           </section>
 
-          <div className="mt-8 flex flex-col gap-3 border-t border-slate-200 pt-8 sm:flex-row sm:justify-end print:hidden">
+          <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:justify-end lg:mt-8 lg:pt-8 print:hidden">
             <button
               type="button"
               onClick={() => window.print()}
-              className="order-2 rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 sm:order-1"
+              className="order-2 flex min-h-[48px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-base font-semibold text-slate-800 shadow-sm active:bg-slate-50 sm:order-1 lg:min-h-0 lg:rounded-lg lg:py-3 lg:text-sm lg:hover:bg-slate-50"
             >
               Imprimir
             </button>
             <Link
               to="/paciente/nuevo"
-              className="order-1 rounded-lg bg-slate-900 px-5 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-slate-800 sm:order-2"
+              className="order-1 flex min-h-[48px] items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-center text-base font-semibold text-white shadow-md active:bg-slate-950 sm:order-2 lg:min-h-0 lg:rounded-lg lg:py-3 lg:text-sm lg:shadow-sm lg:hover:bg-slate-800"
             >
               Nuevo paciente
             </Link>

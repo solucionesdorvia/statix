@@ -110,7 +110,8 @@ function buildTiposEstudio(form: FormState): string[] {
 
 function inputClass(error?: string) {
   return [
-    "mt-1.5 w-full rounded-md border px-3 py-2 text-sm text-slate-900 shadow-sm transition-colors",
+    "mt-1.5 w-full rounded-lg border px-3 py-3 text-base text-slate-900 shadow-sm transition-colors",
+    "min-h-[44px] lg:min-h-0 lg:rounded-md lg:py-2 lg:text-sm",
     "focus:border-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-700/20",
     error ? "border-red-400 bg-red-50/50" : "border-slate-300 bg-white",
   ].join(" ");
@@ -119,7 +120,7 @@ function inputClass(error?: string) {
 function TooltipIcon({ text }: { text: string }) {
   return (
     <span
-      className="ml-1 inline-flex h-5 w-5 cursor-help items-center justify-center rounded-full border border-slate-300 bg-slate-50 text-xs font-semibold text-slate-500"
+      className="ml-1 inline-flex min-h-[44px] min-w-[44px] cursor-help items-center justify-center rounded-full border border-slate-300 bg-slate-50 text-xs font-semibold text-slate-500 lg:min-h-0 lg:min-w-0 lg:h-5 lg:w-5"
       title={text}
       role="img"
       aria-label={text}
@@ -210,13 +211,13 @@ export function PacienteNuevo() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl pb-12">
-      <header className="mb-8 border-b border-slate-200 pb-6">
+    <div className="mx-auto w-full max-w-3xl pb-8 lg:pb-12">
+      <header className="mb-6 border-b border-slate-200 pb-5 lg:mb-8 lg:pb-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-sky-800">Statix</p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+        <h1 className="mt-1 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl lg:text-3xl">
           Evaluación clínica
         </h1>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 lg:text-sm">
           Complete los campos con la información disponible. Los datos obligatorios están marcados con{" "}
           <span className="text-red-600">*</span>.
         </p>
@@ -224,7 +225,7 @@ export function PacienteNuevo() {
 
       <form
         onSubmit={onSubmit}
-        className="space-y-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8"
+        className="space-y-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 lg:space-y-8 lg:p-8"
         noValidate
       >
         {errors.server && (
@@ -237,11 +238,11 @@ export function PacienteNuevo() {
         )}
 
         {/* Sección 1 */}
-        <section className="space-y-5">
+        <section className="space-y-4 lg:space-y-5">
           <h2 className="border-b border-slate-100 pb-2 text-base font-semibold text-slate-900">
             1. Datos básicos
           </h2>
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:gap-5">
             <div className="sm:col-span-1">
               <label htmlFor="edad" className="text-sm font-medium text-slate-800">
                 Edad <span className="text-red-600">*</span>
@@ -316,11 +317,11 @@ export function PacienteNuevo() {
         </section>
 
         {/* Sección 2 */}
-        <section className="space-y-5">
+        <section className="space-y-4 lg:space-y-5">
           <h2 className="border-b border-slate-100 pb-2 text-base font-semibold text-slate-900">
             2. Escala neurológica
           </h2>
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:gap-5">
             <div>
               <label htmlFor="nihss" className="flex items-center text-sm font-medium text-slate-800">
                 NIHSS <span className="text-red-600">*</span>
@@ -378,7 +379,7 @@ export function PacienteNuevo() {
         </section>
 
         {/* Sección 3 */}
-        <section className="space-y-5">
+        <section className="space-y-4 lg:space-y-5">
           <h2 className="border-b border-slate-100 pb-2 text-base font-semibold text-slate-900">
             3. Imágenes
           </h2>
@@ -412,11 +413,11 @@ export function PacienteNuevo() {
             <legend className="text-sm font-medium text-slate-800">
               ¿Se detectó LVO? <span className="text-red-600">*</span>
             </legend>
-            <div className="mt-3 flex flex-wrap gap-4">
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-4">
               {(["Sí", "No", "No determinado"] as const).map((opt) => (
                 <label
                   key={opt}
-                  className="inline-flex cursor-pointer items-center gap-2 text-sm text-slate-800"
+                  className="inline-flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg border border-slate-200 bg-slate-50/80 px-3 py-2.5 text-base text-slate-800 active:bg-slate-100 sm:min-h-0 sm:border-transparent sm:bg-transparent sm:px-0 sm:py-0 sm:text-sm"
                 >
                   <input
                     type="radio"
@@ -427,7 +428,7 @@ export function PacienteNuevo() {
                       setForm((f) => ({ ...f, lvo: opt }));
                       clearFieldError("lvo");
                     }}
-                    className="h-4 w-4 border-slate-300 text-sky-800 focus:ring-sky-700"
+                    className="h-5 w-5 shrink-0 border-slate-300 text-sky-800 focus:ring-sky-700 lg:h-4 lg:w-4"
                   />
                   {opt}
                 </label>
@@ -443,7 +444,7 @@ export function PacienteNuevo() {
           <fieldset>
             <legend className="text-sm font-medium text-slate-800">Tipo de estudio realizado</legend>
             <p className="mt-1 text-xs text-slate-500">Puede marcar más de una opción.</p>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div className="mt-3 grid gap-2 sm:grid-cols-2 sm:gap-3">
               {(
                 [
                   ["estudioTacSimple", "TAC simple"],
@@ -454,7 +455,7 @@ export function PacienteNuevo() {
               ).map(([key, label]) => (
                 <label
                   key={key}
-                  className="flex cursor-pointer items-center gap-2 rounded-md border border-slate-200 bg-slate-50/80 px-3 py-2.5 text-sm text-slate-800 hover:bg-slate-50"
+                  className="flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg border border-slate-200 bg-slate-50/80 px-3 py-3 text-base text-slate-800 active:bg-slate-100 sm:min-h-0 sm:py-2.5 sm:text-sm lg:hover:bg-slate-50"
                 >
                   <input
                     type="checkbox"
@@ -462,7 +463,7 @@ export function PacienteNuevo() {
                     onChange={(ev) =>
                       setForm((f) => ({ ...f, [key]: ev.target.checked }))
                     }
-                    className="h-4 w-4 rounded border-slate-300 text-sky-800 focus:ring-sky-700"
+                    className="h-5 w-5 shrink-0 rounded border-slate-300 text-sky-800 focus:ring-sky-700 lg:h-4 lg:w-4"
                   />
                   {label}
                 </label>
@@ -472,7 +473,7 @@ export function PacienteNuevo() {
         </section>
 
         {/* Sección 4 */}
-        <section className="space-y-5">
+        <section className="space-y-4 lg:space-y-5">
           <h2 className="border-b border-slate-100 pb-2 text-base font-semibold text-slate-900">
             4. Contexto clínico
           </h2>
@@ -481,11 +482,11 @@ export function PacienteNuevo() {
             <legend className="text-sm font-medium text-slate-800">
               ¿Recibió tPA? <span className="text-red-600">*</span>
             </legend>
-            <div className="mt-3 flex flex-wrap gap-6">
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-6">
               {(["Sí", "No"] as const).map((opt) => (
                 <label
                   key={opt}
-                  className="inline-flex cursor-pointer items-center gap-2 text-sm text-slate-800"
+                  className="inline-flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg border border-slate-200 bg-slate-50/80 px-3 py-2.5 text-base text-slate-800 active:bg-slate-100 sm:min-h-0 sm:border-transparent sm:bg-transparent sm:px-0 sm:py-0 sm:text-sm"
                 >
                   <input
                     type="radio"
@@ -496,7 +497,7 @@ export function PacienteNuevo() {
                       setForm((f) => ({ ...f, recibioTpa: opt }));
                       clearFieldError("recibioTpa");
                     }}
-                    className="h-4 w-4 border-slate-300 text-sky-800 focus:ring-sky-700"
+                    className="h-5 w-5 shrink-0 border-slate-300 text-sky-800 focus:ring-sky-700 lg:h-4 lg:w-4"
                   />
                   {opt}
                 </label>
@@ -509,7 +510,7 @@ export function PacienteNuevo() {
             )}
           </fieldset>
 
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:gap-5">
             <div>
               <label htmlFor="presionSistolica" className="text-sm font-medium text-slate-800">
                 Presión arterial sistólica (mmHg)
@@ -558,12 +559,12 @@ export function PacienteNuevo() {
             </div>
           </div>
 
-          <label className="flex cursor-pointer items-start gap-3 rounded-md border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800">
+          <label className="flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3 text-base text-slate-800 active:bg-slate-100 sm:min-h-0 sm:items-start sm:py-3 sm:text-sm lg:items-start">
             <input
               type="checkbox"
               checked={form.anticoagulado}
               onChange={(ev) => setForm((f) => ({ ...f, anticoagulado: ev.target.checked }))}
-              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-sky-800 focus:ring-sky-700"
+              className="h-5 w-5 shrink-0 rounded border-slate-300 text-sky-800 focus:ring-sky-700 lg:mt-0.5 lg:h-4 lg:w-4"
             />
             <span>Paciente anticoagulado</span>
           </label>
@@ -573,7 +574,7 @@ export function PacienteNuevo() {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-sky-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-950 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:min-w-[200px]"
+            className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-sky-900 px-5 py-3.5 text-base font-semibold text-white shadow-md transition hover:bg-sky-950 active:bg-sky-950 disabled:cursor-not-allowed disabled:opacity-70 lg:min-h-0 lg:w-auto lg:min-w-[200px] lg:rounded-lg lg:py-3 lg:text-sm lg:shadow-sm"
           >
             {loading && (
               <svg
